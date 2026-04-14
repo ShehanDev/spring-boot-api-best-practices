@@ -28,5 +28,13 @@ public class EmployeeController {
 
 
 
+    //This method will handle HTTP GET requests to retrieve an employee by their ID
+    @GetMapping("{id}")
+    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable("id") Long employeeId){
+        EmployeeDto employeeDto = employeeService.getEmployeeById(employeeId);
+        return ResponseEntity.ok(employeeDto);
+
+    }
+
 
 }

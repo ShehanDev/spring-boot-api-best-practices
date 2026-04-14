@@ -1,6 +1,7 @@
 package com.shehan.workflow_service.service.impl;
 
 import com.shehan.workflow_service.dto.EmployeeDto;
+import com.shehan.workflow_service.exception.ResourceNotFoundException;
 import com.shehan.workflow_service.mapper.EmployeeMapper;
 import com.shehan.workflow_service.model.Employee;
 import com.shehan.workflow_service.repository.EmployeeRepository;
@@ -28,5 +29,15 @@ public class EmployeeServiceImpl implements EmployeeService{
         Employee savedEmployee = employeeRepository.save(employee);
         //return the saved employee as EmployeeDto
         return EmployeeMapper.mapToEmployeeDto(savedEmployee);
+    }
+
+
+    //This method will retrieve an employee by their ID
+    @Override
+    public EmployeeDto getEmployeeById(long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(()->
+                        new ResourceNotFoundException("Employee Not exist with given id :"+employeeId));
+        return EmployeeMapper.mapToEmployeeDto(employee);
     }
 }
