@@ -1,5 +1,6 @@
 package com.shehan.workflow_service.controller;
 import com.shehan.workflow_service.dto.EmployeeDto;
+import com.shehan.workflow_service.model.Employee;
 import com.shehan.workflow_service.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,5 +46,12 @@ public class EmployeeController {
         return ResponseEntity.ok(employees);
     };
 
+
+    //update Employee
+    @PutMapping("{id}")
+    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable("id") Long employeeId ,@RequestBody EmployeeDto updatedEmpData){
+        EmployeeDto updatedEmployee = employeeService.updateEmployee(employeeId,updatedEmpData);
+        return ResponseEntity.ok(updatedEmployee);
+    }
 
 }
