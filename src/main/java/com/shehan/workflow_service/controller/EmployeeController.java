@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @AllArgsConstructor
 //This annotation indicates that this class is a REST controller,
@@ -35,6 +37,13 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeDto);
 
     }
+
+    //Get all employees list
+    @GetMapping
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees(){
+       List<EmployeeDto> employees =  employeeService.getAllEmployees();
+        return ResponseEntity.ok(employees);
+    };
 
 
 }

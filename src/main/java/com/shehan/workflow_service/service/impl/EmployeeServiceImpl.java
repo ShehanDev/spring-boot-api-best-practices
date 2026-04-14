@@ -9,6 +9,9 @@ import com.shehan.workflow_service.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 //annotation tells spring container to create spring been for this class and manage its lifecycle
 @Service
 
@@ -40,4 +43,12 @@ public class EmployeeServiceImpl implements EmployeeService{
                         new ResourceNotFoundException("Employee Not exist with given id :"+employeeId));
         return EmployeeMapper.mapToEmployeeDto(employee);
     }
+
+    @Override
+    public List<EmployeeDto> getAllEmployees() {
+        List<Employee> employees = employeeRepository.findAll();
+        return employees.stream().map((employee -> EmployeeMapper.mapToEmployeeDto(employee))).collect(Collectors.toList());
+    }
+
+
 }
