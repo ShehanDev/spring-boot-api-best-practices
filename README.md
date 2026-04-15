@@ -10,6 +10,7 @@ Simply replace your current `README.md` with the content below.
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue)](https://www.postgresql.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+```
 ## 📌 Overview
 
 This repository is a **production‑ready reference implementation** of a RESTful API built with Spring Boot. It focuses on two essential skills for Java backend developers:
@@ -23,9 +24,10 @@ The project accompanies a detailed technical article that explains **why** these
 > *"Building Interview‑Ready REST APIs: Exception Handling and Swagger Documentation in Spring Boot"*  
 > *(Link coming soon – check back!)*
 
+
+
 ## 🧩 Project Structure
 
-```
     src/
     ├── main/
     │   ├── java/com/shehan/workflow_service/
