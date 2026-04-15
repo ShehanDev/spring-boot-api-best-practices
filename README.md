@@ -1,60 +1,103 @@
-# Spring Boot API Best Practices: Exception Handling & Swagger Documentation
+Here's an updated `README.md` file tailored to your actual project structure, PostgreSQL configuration, and the article you're writing about Exception Handling and Swagger. It includes setup instructions, database configuration, and a clear link to the companion article.
 
-[![Java Version](https://img.shields.io/badge/Java-17-blue.svg)](https://adoptium.net/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.0-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Simply replace your current `README.md` with the content below.
+
+```markdown
+# Spring Boot API Best Practices: Exception Handling & Swagger
+
+[![Java](https://img.shields.io/badge/Java-17-blue)](https://adoptium.net/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.0-brightgreen)](https://spring.io/projects/spring-boot)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue)](https://www.postgresql.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## 📌 Overview
 
-A production‑ready reference implementation of a REST API built with **Spring Boot**. This project demonstrates two critical aspects of professional backend development:
+This repository is a **production‑ready reference implementation** of a RESTful API built with Spring Boot. It focuses on two essential skills for Java backend developers:
 
-- **Global Exception Handling** – Transforming stack traces into structured, client‑friendly error responses using `@RestControllerAdvice`.
-- **Interactive API Documentation** – Auto‑generating and customising OpenAPI 3.0 specifications with SpringDoc and Swagger UI.
+- **Global Exception Handling** – Consistent, structured error responses using `@RestControllerAdvice`.
+- **Interactive API Documentation** – Auto‑generated Swagger UI via SpringDoc OpenAPI.
 
-> **📖 Companion Article:** This repository accompanies the article **[“Building Interview‑Ready REST APIs: Exception Handling and Swagger in Spring Boot”](#)**
-> (link coming soon). It provides a deep dive into *why* these patterns matter .
+The project accompanies a detailed technical article that explains **why** these patterns matter and **how** to implement them correctly.
 
-## 🚀 Key Features Demonstrated
+> 📖 **Read the Full Article:**  
+> *"Building Interview‑Ready REST APIs: Exception Handling and Swagger Documentation in Spring Boot"*  
+> *(Link coming soon – check back!)*
 
-| Feature | Implementation Details |
-|---------|----------------------|
-| **Global Exception Handling** | `@RestControllerAdvice` + `@ExceptionHandler` for consistent error JSON structure. |
-| **Custom Business Exceptions** | `EmployeeNotFoundException`, `InvalidRequestException` with appropriate HTTP status mapping. |
-| **Input Validation** | Jakarta Bean Validation (`@Valid`) with meaningful error messages. |
-| **OpenAPI 3 / Swagger** | SpringDoc OpenAPI starter with customised `@Operation` and `@ApiResponse` annotations. |
-| **DTO Pattern** | Clear separation between entity models and API contracts. |
-| **RESTful Endpoints** | Full CRUD operations for `Employee` resource following REST conventions. |
+## 🧩 Project Structure
+
+```
+    src/
+    ├── main/
+    │   ├── java/com/shehan/workflow_service/
+    │   │   ├── controller/        # REST endpoints with Swagger annotations
+    │   │   ├── dto/               # Data Transfer Objects (EmployeeDto)
+    │   │   ├── exception/         # Custom exceptions & GlobalExceptionHandler
+    │   │   ├── mapper/            # Entity ↔ DTO mapping logic
+    │   │   ├── model/             # JPA entities (Employee)
+    │   │   ├── repository/        # Spring Data JPA interfaces
+    │   │   ├── service/           # Business logic layer
+    │   │   └── WorkflowServiceApplication.java
+    │   └── resources/
+    │       ├── application.yml    # Configuration (DB, JPA, SpringDoc)
+    │       ├── static/
+    │       └── templates/
+    └── test/                      # Unit and integration tests
+    ```
 
 ## 🛠 Tech Stack
 
-- **Language:** Java 17
-- **Framework:** Spring Boot 3.4.0
-- **API Documentation:** SpringDoc OpenAPI 2.6.0
-- **Build Tool:** Maven
-- **Web Server:** Apache Tomcat (embedded)
-
-## 📂 Project Structure
-
-src/
-├── main/
-│ ├── java/com/shehan/workflow_service/
-│ │ ├── controller/ # REST endpoints with Swagger annotations
-│ │ ├── dto/ # Data Transfer Objects
-│ │ ├── exception/ # Custom exceptions and global handler
-│ │ ├── model/ # JPA entities (if applicable)
-│ │ └── service/ # Business logic layer
-│ └── resources/
-│ └── application.yml # Configuration properties
-
+| Technology | Purpose |
+|------------|---------|
+| **Java 17** | Core language |
+| **Spring Boot 3.4.0** | Application framework |
+| **Spring Data JPA** | Database abstraction |
+| **PostgreSQL** | Relational database |
+| **SpringDoc OpenAPI 2.6.0** | Swagger UI & OpenAPI spec generation |
+| **Maven** | Build & dependency management |
 
 ## ⚙️ Getting Started
 
 ### Prerequisites
-- JDK 17 or higher
+- JDK 17 or later
 - Maven 3.6+
+- PostgreSQL (running on `localhost:5432`)
 
-### Run Locally
+### Database Setup
+Create a database named `ems` in PostgreSQL:
+```sql
+CREATE DATABASE ems;
+```
+The application will auto‑create tables using `spring.jpa.hibernate.ddl-auto=update`.
 
+### Configuration
+The main configuration is in `src/main/resources/application.yml`:
+```yaml
+spring:
+  application:
+    name: workflow-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ems
+    username: (your username)
+    password: (your pw)
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+```
+
+> ⚠️ **Security Note:** In a real production environment, credentials should be externalised using environment variables (e.g., `${DB_USERNAME}`). This example uses plain text for local development simplicity.
+
+### Run the Application
 ```bash
 # Clone the repository
 git clone https://github.com/ShehanDev/spring-boot-api-best-practices.git
@@ -62,87 +105,87 @@ cd spring-boot-api-best-practices
 
 # Build and run
 ./mvnw spring-boot:run
+```
+The server will start at `http://localhost:8080`.
 
-The application will start on http://localhost:8080.
-📖 API Documentation (Swagger UI)
+## 📖 API Documentation (Swagger)
 
-Once the application is running, access the interactive API documentation at:
+Once the app is running, access the interactive API docs at:
 
-🔗 http://localhost:8080/swagger-ui/index.html
+🔗 **[http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)**
 
-You can also retrieve the raw OpenAPI JSON spec from:
+You can also get the raw OpenAPI JSON:
+- `http://localhost:8080/api-docs`
 
-    http://localhost:8080/v3/api-docs
 
-📝 Article Companion: Deep Dive Explained
+![img.png](img.png)
+## 📝 Article Highlights
 
-This repository is designed to support the following technical article structure:
-1. The Problem with Default Error Responses
+This repository demonstrates the concepts covered in the accompanying article:
 
-Why raw stack traces in production are harmful and what a well‑structured error response looks like.
-2. Implementing Global Exception Handling
-java
+### 1. Global Exception Handling
+- Custom exceptions like `EmployeeNotFoundException`.
+- `@RestControllerAdvice` with `@ExceptionHandler` to return structured `ErrorResponse` JSON.
+- Mapping exceptions to appropriate HTTP status codes.
 
-@RestControllerAdvice
-public class GlobalExceptionHandler {
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFound(...) { ... }
-}
+### 2. Swagger / OpenAPI Documentation
+- `@Operation` and `@ApiResponses` annotations on controller methods.
+- Custom API info (title, description, contact) via `springdoc` properties.
+- Documented error responses (e.g., `404 Not Found`, `400 Bad Request`).
 
-3. Enriching Controllers with Swagger Annotations
-java
+### 3. DTO Pattern & Validation
+- `EmployeeDto` separates API contract from the JPA entity.
+- Jakarta Bean Validation (`@NotNull`, `@Email`, etc.) ensures data integrity.
 
-@Operation(summary = "Create a new employee")
-@ApiResponses(value = {
-    @ApiResponse(responseCode = "201", description = "Employee created"),
-    @ApiResponse(responseCode = "400", description = "Invalid input")
-})
-@PostMapping
-public ResponseEntity<EmployeeDto> createEmployee(...) { ... }
+## 🧪 Sample API Calls
 
-4. Customising OpenAPI Info & Servers
-
-Using @OpenAPIDefinition to add contact details, license, and server URLs.
-5. Testing the API with Postman/cURL
-
-Examples of valid requests and expected error responses.
-🧪 Sample API Requests
-Create Employee (Success)
-bash
-
+### Create an Employee
+```bash
 curl -X POST http://localhost:8080/v1/api/employees \
   -H "Content-Type: application/json" \
-  -d '{"firstName":"John","lastName":"Doe","email":"john.doe@example.com"}'
+  -d '{
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com"
+  }'
+```
 
-Employee Not Found (Error Response)
-bash
+### Get All Employees
+```bash
+curl -X GET http://localhost:8080/v1/api/employees
+```
 
-curl -X GET http://localhost:8080/v1/api/employees/999
-
-Response (HTTP 404):
-json
-
+### Trigger a 404 Error
+```bash
+curl -X GET http://localhost:8080/v1/api/employees/9999
+```
+**Response:**
+```json
 {
-  "timestamp": "2026-04-15T10:30:00",
+  "timestamp": "2026-04-15T12:00:00",
   "status": 404,
   "error": "Not Found",
-  "message": "Employee with id '999' not found",
-  "path": "/v1/api/employees/999"
+  "message": "Employee not found with id: 9999",
+  "path": "/v1/api/employees/9999"
 }
+```
 
-🎯 Why This Matters f
+## 🎯 Why This Project Matters 
 
-    Demonstrates Clean Code Principles: Separation of concerns, meaningful naming, DTO pattern.
+- **Clean Architecture:** Separation of concerns (Controller → Service → Repository).
+- **Production Mindset:** Proper error handling and API documentation.
+- **Industry Tools:** Demonstrates experience with Spring Boot, JPA, PostgreSQL, and Swagger.
+- **Interview Readiness:** Common interview questions often revolve around exception handling and REST best practices.
 
-    Shows Production Awareness: You understand that raw exceptions should never leak to clients.
+## 📄 License
 
-    Highlights Documentation Skills: Teams value developers who document APIs in code using Swagger.
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
 
-    Proves Framework Mastery: Using @RestControllerAdvice and SpringDoc effectively.
+## 👤 Author
 
-📄 License
+**Shehan Dev**  
+[GitHub](https://github.com/ShehanDev) | [LinkedIn](http://www.linkedin.com/in//shehan-mallawaarachchi/fr) *(update link)*
 
-This project is licensed under the MIT License – see the LICENSE file for details.
-👤 Author
+---
 
-Shehan Dev
+⭐ If you found this helpful, please consider starring the repository!
